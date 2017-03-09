@@ -18,14 +18,22 @@ grad = zeros(size(theta));
 %               derivatives of the cost w.r.t. each parameter in theta
 %
 % Note: grad should have the same dimensions as theta
-%
 
-% X,theta,y
- firstTerm = ( -y .* log( sigmoid(X*theta) ));
- secondTerm = ((1-y) .* log( 1-sigmoid(X*theta) ));
- sub = firstTerm - secondTerm;
- summation = sum(sub);
- J = 1/m *( summation );
+z = X*theta;
+prediction = sigmoid(z);
+
+% Logistic Cost
+firstTerm = ( -y .* log( prediction ));
+secondTerm = ((1-y) .* log( 1-prediction ));
+sub = firstTerm - secondTerm;
+summation = sum(sub);
+J = 1/m *( summation );
+ 
+% Logistic Gradient Descent
+for j = 1:size(theta)
+%     X(:,j), prediction-y
+    grad(j) = (1/m) * ( (prediction-y)'*X(:,j) );
+    
  
 % =============================================================
 
