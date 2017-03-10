@@ -19,13 +19,13 @@ grad = zeros(size(theta));
 
 [J,grad] = costFunction(theta,X,y);
 
-regularizedTheta = [0; theta(2:length(theta));];
+regularizeTheta = [0; theta(2:length(theta));];
 
-% regularizeTerm = lambda/(2*m) * sum(regularizeTheta); % Not Regularize
-regularizeTerm = lambda/(2*m) * sum(regularizedTheta.^2);
+regularizeTerm = lambda/(2*
+regularizeTerm = lambda/(2*m) * sum(regularizeTheta.^2);
 J = J + regularizeTerm;
 
-grad = grad + lambda/(2*m) * regularizedTheta;
+
 % =============================================================
 
 end
