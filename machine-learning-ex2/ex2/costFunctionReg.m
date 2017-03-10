@@ -25,7 +25,7 @@ regularizedTheta = [0; theta(2:length(theta));];
 regularizeTerm = lambda/(2*m) * sum(regularizedTheta.^2);
 J = J + regularizeTerm;
 
-grad = grad + lambda/(2*m) * regularizedTheta;
+grad = grad + lambda/m * regularizedTheta;
 % =============================================================
 
 end
