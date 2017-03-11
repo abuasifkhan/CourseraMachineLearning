@@ -32,13 +32,15 @@ X = [ones(m, 1) X];
 %       
 
 
-
+% Mainly predicts which value is the max and returns its index in the
+% prediction matrix below.
 prediction = X * all_theta';
 
 for i = 1:m
     [val, index] = max(prediction(i,:));
     p(i) = index;
 end
+
 
 % =========================================================================
 
