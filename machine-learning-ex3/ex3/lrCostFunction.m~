@@ -44,23 +44,17 @@ firstTerm = (-y .* log(prediction) );
 secondTerm = ( (1.0-y) .* log(1.0-prediction) );
 J = 1.0/m * sum( firstTerm - secondTerm );
 
-regularizedTheta = [0; theta(2:length(theta))];
-
 % Logistic Regularized Regration 
-regularizedTerm = lambda/(2.0*m) * sum(regularizedTheta.^2);
+regularizedTerm = lambda/(2.0*m) * sum(theta.^2);
 J = J + regularizedTerm;
 
 % Logistic Gradient Descent
-grad = (prediction-y)' * X;
-grad = (1.0/m) .* grad;
-grad = grad(:);
-
-% for j = 1:size(theta)
-% %     X(:,j), prediction-y
-%     grad(j) = (1/m) * ( (prediction-y)'*X(:,j) );
+% grad = (prediction-y)' * X;
+% grad = (1.0/m) .* grad;
+% grad = grad(:);
 
 % Logistic Regularized Gradient Descent
-regularizedTerm = lambda/m .* regularizedTheta;
+regularizedTerm = lambda/m * theta;
 grad = grad + regularizedTerm;
 
 end
