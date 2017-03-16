@@ -63,20 +63,25 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
-
+% Activation1
 A1 = [ones(m,1) X]; % 5000x401
+
+% Activation2
 Z2 = A1 * Theta1';
 A2 = sigmoid(Z2);
 A2 = [ones(m,1) A2];    % 5000 X 26
+
+% Activation3 / HTheta
 Z3 = A2 * Theta2';
 A3 = sigmoid(Z3);   % 5000 X 10
 
-
+% if y(i) = 5, then yk(i) = [0 0 0 0 1 0 0 0 0 0]
 yk = zeros(m, num_labels);  % 5000 X 10
 for i=1:m
     yk(i, y(i)) = 1;
 end
 
+%Cost Function Formula
 firstTerm = -yk .* log(A3);
 secondTerm = (1-yk) .* log(1-A3);
 
@@ -89,15 +94,20 @@ theta2Sum = sum( sum (Theta2(:, 2:end).^2) );
 
 J = J + lambda/(2*m)*(theta1Sum+theta2Sum); % 1x1
 
-%% Test
+%% Final Backpropagation
+% step 1 (output layer)
 delta3 = A3 - yk; % 5000x10
+
+% step 2 (hidden layers)
 delta2 = delta3 * Theta2; % 5000x26
 delta2 = (delta2 .* [ones(size(Z2,1),1) sigmoidGradient(Z2)]); % 5000x26
 delta2 = delta2(:,2:end); % 5000x25
 
+% Step 3 (Accumulative Delta Calculation)
 Delta2 = delta3' * A2; %(10x26)
 Delta1 = delta2' * A1; %(25x401)
 
+% Step 4 (Gradient calculation)
 D2 = (1/m)*Delta2 + lambda*Theta2;
 D1 = (1/m)*Delta1 + lambda*Theta1;
 
@@ -105,11 +115,6 @@ Theta1_grad = D1;
 Theta2_grad = D2;
 
 %%
-
-% -------------------------------------------------------------
-
-% =========================================================================
-% Theta1(25x401), Theta2(10x26)
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
