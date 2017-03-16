@@ -84,23 +84,12 @@ secondTerm = (1-yk) .* log(1-A3);
 Jtemp = (1/m)*sum (sum(firstTerm - secondTerm) );
 J = Jtemp;
 
+%Always remember to take Theta from the second element
 theta1Sum = sum (sum (Theta1(:, 2:end).^2) );
 theta2Sum = sum( sum (Theta2(:, 2:end).^2) );
 
 J = J + lambda/(2*m)*(theta1Sum+theta2Sum);
 
-%%test
-% for i = 1:m
-%     for k = 1:num_labels
-%         yk = zeros(num_labels,1);
-%         yk(y(k)) = 1;
-%         firstTerm = yk(k).*log(A3(i,k));
-%         secondTerm = (1-yk(k) ).*(log(1-A3(i,k)));
-%         J = J + sum(firstTerm + secondTerm);
-%     end
-% end
-% size(J)
-% J = -(1/m)*J;
 
 % -------------------------------------------------------------
 
