@@ -64,11 +64,10 @@ Theta2_grad = zeros(size(Theta2));
 
 
 
-A1 = [ones(m,1) X];
+A1 = [ones(m,1) X]; % 5000x401
 Z2 = A1 * Theta1';
 A2 = sigmoid(Z2);
-
-A2 = [ones(m,1) A2];
+A2 = [ones(m,1) A2];    % 5000 X 26
 Z3 = A2 * Theta2';
 A3 = sigmoid(Z3);   % 5000 X 10
 
@@ -88,12 +87,29 @@ J = Jtemp;
 theta1Sum = sum (sum (Theta1(:, 2:end).^2) );
 theta2Sum = sum( sum (Theta2(:, 2:end).^2) );
 
-J = J + lambda/(2*m)*(theta1Sum+theta2Sum);
+J = J + lambda/(2*m)*(theta1Sum+theta2Sum); % 1x1
 
+%% Test
+delta3 = A3 - yk; % 5000x10
+delta2 = delta3 * Theta2; % 5000x26
+delta2 = (delta2 .* [ones(size(Z2,1),1) sigmoidGradient(Z2)]); % 5000x26
+delta2 = delta2(:,2:end); % 5000x25
+
+Delta2 = delta3' * A2; %(10x26)
+Delta1 = delta2' * A1; %(25x401)
+
+D2 = (1/m)*Delta2 + lambda*Theta2;
+D1 = (1/m)*Delta1 + lambda*Theta1;
+
+Theta1_grad = D1;
+Theta2_grad = D2;
+
+%%
 
 % -------------------------------------------------------------
 
 % =========================================================================
+% Theta1(25x401), Theta2(10x26)
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
