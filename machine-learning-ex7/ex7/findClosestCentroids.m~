@@ -20,8 +20,7 @@ idx = zeros(size(X,1), 1);
 %
 % Note: You can use a for-loop over the examples to compute this.
 %
-
-% size(X), size(centroids)
+size(X), size(centroids)
 
 dist = zeros(size(X,1), K);
 
@@ -32,8 +31,9 @@ for i = 1: size(X,1)
 end
 
 for i = 1: size(X,1)
-    [val, idx(i)] = min(dist(i,:));
+    [_, idx(i)] = min(dist(i,:));
 end
+
 
 % =============================================================
 
